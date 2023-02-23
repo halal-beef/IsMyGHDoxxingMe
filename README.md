@@ -5,9 +5,13 @@ sometimes a little cheeky slipup can lead to some dire consequences for some peo
 
 ## Documentation
 
-```--github-repository``` - A Link to the github repo
-```--target-email``` - The email the program should search for
-```--target-name``` - The name the program should search for
-```--target-branch``` = The branch of the repo that the tool should be searching in
+- ```--github-repository``` - A Link to the github repo
+
+- ```--target-email``` - The email the program should search for
+
+- ```--target-name``` - The name the program should search for
+
+- ```--target-branch``` = The branch of the repo that the tool should be searching in
+
 
 > **Warning** THESE ARE NON OPTIONAL
