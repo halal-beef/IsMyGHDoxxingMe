@@ -11,7 +11,7 @@ sometimes a little cheeky slipup can lead to some dire consequences for some peo
 
 - ```--target-name``` - The name the program should search for
 
-- ```--target-branch``` = The branch of the repo that the tool should be searching in
+- ```--target-branch``` - The branch of the repo that the tool should be searching in
 
 
 > **Warning** THESE ARE NON OPTIONAL
