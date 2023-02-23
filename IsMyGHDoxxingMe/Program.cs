@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 #region Console Intro Junk
 
@@ -34,6 +34,7 @@ string githubRepo = "";
 string targetEmail = "";
 string targetName = "";
 string targetBranch = "";
+bool leaked = false;
 
 #endregion
 
@@ -95,10 +96,11 @@ foreach (Root parsedData in parsedJSON)
 {
     // Email Detection
 
-    if(parsedData.commit.committer.email.Contains(targetEmail) || parsedData.commit.author.email.Contains(targetEmail))
+    if (parsedData.commit.committer.email.Contains(targetEmail) || parsedData.commit.author.email.Contains(targetEmail))
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine($"<!> Email Leaked In Commit: {parsedData.commit.url}");
+        leaked = true;
     }
 
     // Name Detection
@@ -107,12 +109,25 @@ foreach (Root parsedData in parsedJSON)
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine($"<!> Name Leaked In Commit: {parsedData.commit.url}");
+        leaked = true;
     }
-
-    // Reset Colour
-
-    Console.ForegroundColor = ConsoleColor.White;
 }
+
+// Present A Message If Nothing Has Leaked
+
+if (leaked == false)
+{
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("<!> Good News! According To The Program Nothing Has Been Leaked!");
+}
+
+// Reset Colour
+
+Console.ForegroundColor = ConsoleColor.White;
+
+// Exit
+
+Environment.Exit(0);
 
 #endregion
 
