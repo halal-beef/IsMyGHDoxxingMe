@@ -8,6 +8,7 @@
     <PublishTrimmed>false</PublishTrimmed>
     <PublishSingleFile>true</PublishSingleFile>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
