@@ -99,7 +99,7 @@ foreach (Root parsedData in parsedJSON)
     if (parsedData.commit.committer.email.Contains(targetEmail) || parsedData.commit.author.email.Contains(targetEmail))
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine($"<!> Email Leaked In Commit: {parsedData.commit.url}");
+        Console.WriteLine($"<!> Email Leaked In Commit: {parsedData.html_url}");
         leaked = true;
     }
 
@@ -108,7 +108,7 @@ foreach (Root parsedData in parsedJSON)
     if (parsedData.commit.committer.name.Contains(targetName) || parsedData.commit.author.email.Contains(targetName))
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine($"<!> Name Leaked In Commit: {parsedData.commit.url}");
+        Console.WriteLine($"<!> Name Leaked In Commit: {parsedData.html_url}");
         leaked = true;
     }
 }
