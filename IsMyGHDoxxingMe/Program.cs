@@ -30,6 +30,8 @@ Console.ForegroundColor = ConsoleColor.White;
 #region variables
 
 int argCount = 0;
+int nameLeakCount = 0;
+int emailLeakCount = 0;
 string githubRepo = "";
 string targetEmail = "";
 string targetName = "";
@@ -96,29 +98,40 @@ foreach (Root parsedData in parsedJSON)
 {
     // Email Detection
 
-    if (parsedData.commit.committer.email.Contains(targetEmail) || parsedData.commit.author.email.Contains(targetEmail))
+    if (Contains(parsedData.commit.committer.email, targetEmail) || Contains(parsedData.commit.author.email, targetEmail) || Contains(parsedData.commit.message, targetName))
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine($"<!> Email Leaked In Commit: {parsedData.html_url}");
+        emailLeakCount++;
         leaked = true;
     }
 
     // Name Detection
 
-    if (parsedData.commit.committer.name.Contains(targetName) || parsedData.commit.author.email.Contains(targetName))
+    if (Contains(parsedData.commit.committer.name, targetName) || Contains(parsedData.commit.author.name, targetName) || Contains(parsedData.commit.message, targetName))
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine($"<!> Name Leaked In Commit: {parsedData.html_url}");
+        nameLeakCount++;
         leaked = true;
     }
 }
 
-// Present A Message If Nothing Has Leaked
+// Present A Message If Nothing Has Leaked And Give A Count Of Leaks If There Was Any
 
 if (leaked == false)
 {
     Console.ForegroundColor = ConsoleColor.Green;
     Console.WriteLine("<!> Good News! According To The Program Nothing Has Been Leaked!");
+}
+else
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine(
+            $"<!> There has been {nameLeakCount + emailLeakCount} Leaks.\n" +
+            $"<!> {nameLeakCount} of them being name leaks.\n" +
+            $"<!> {emailLeakCount} of them being email leaks."
+                     );
 }
 
 // Reset Colour
@@ -144,6 +157,12 @@ static string DownloadString(string Url)
     {
         return content.ReadAsStringAsync().Result;
     }
+}
+
+// Stolen from stackoverflow https://stackoverflow.com/questions/444798/case-insensitive-containsstring
+static bool Contains(string source, string toCheck)
+{
+    return source?.IndexOf(toCheck, StringComparison.OrdinalIgnoreCase) >= 0;
 }
 
 #endregion
